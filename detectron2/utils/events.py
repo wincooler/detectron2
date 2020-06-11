@@ -8,6 +8,7 @@ from contextlib import contextmanager
 import torch
 from fvcore.common.file_io import PathManager
 from fvcore.common.history_buffer import HistoryBuffer
+from detectron2.utils.logger import get_logger
 
 _CURRENT_STORAGE_STACK = []
 
@@ -154,7 +155,8 @@ class CommonMetricPrinter(EventWriter):
             max_iter (int): the maximum number of iterations to train.
                 Used to compute ETA.
         """
-        self.logger = logging.getLogger(__name__)
+        #self.logger = logging.getLogger(__name__)
+        self.logger, is_d2_train = get_logger(__name__)
         self._max_iter = max_iter
 
     def write(self):

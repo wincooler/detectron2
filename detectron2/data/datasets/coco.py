@@ -143,7 +143,8 @@ Category ids in annotations are not in [1, #categories]! We'll apply a mapping f
                 record["file_name"] = os.path.join(image_root, img_dict["path"])
         else:
             record["file_name"] = os.path.join(image_root, img_dict["file_name"])
-        assert os.path.exists(record["file_name"]), f"{record['file_name']} not existed"
+        file_abs_path = record["file_name"]
+        assert os.path.exists(record["file_name"]), f"{file_abs_path} not existed"
         record["height"] = img_dict["height"]
         record["width"] = img_dict["width"]
         image_id = record["image_id"] = img_dict["id"]
