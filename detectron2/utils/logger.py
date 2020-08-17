@@ -225,8 +225,8 @@ def get_logger(name):
     log_cls = logging.getLoggerClass()
     logger = None 
     is_d2_train = True
-    if "training" in log_cls.manager.loggerDict.keys() :
-        logger =logging.getLogger("training")  
+    if "pi_training" in log_cls.manager.loggerDict.keys() :
+        logger =logging.getLogger("pi_training")  
         is_d2_train = False
     else:
         logger = logging.getLogger(name)

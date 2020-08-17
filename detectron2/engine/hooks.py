@@ -101,7 +101,8 @@ class IterationTimer(HookBase):
         self._total_timer.pause()
 
     def after_train(self):
-        logger = logging.getLogger(__name__)
+        #logger = logging.getLogger(__name__)
+        logger = comm.get_pi_training_loger()
         total_time = time.perf_counter() - self._start_time
         total_time_minus_hooks = self._total_timer.seconds()
         hook_time = total_time - total_time_minus_hooks
