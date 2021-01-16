@@ -11,6 +11,7 @@ from fvcore.common.history_buffer import HistoryBuffer
 from detectron2.utils.logger import get_logger
 
 from detectron2.utils.file_io import PathManager
+from detectron2.utils.logger import get_logger
 
 __all__ = [
     "get_event_storage",
