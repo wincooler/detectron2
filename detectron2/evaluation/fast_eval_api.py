@@ -1,4 +1,4 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
+# Copyright (c) Facebook, Inc. and its affiliates.
 import copy
 import numpy as np
 import time
@@ -58,7 +58,7 @@ class COCOeval_opt(COCOeval):
             instances_cpp = []
             for instance in instances:
                 instance_cpp = _C.InstanceAnnotation(
-                    instance["id"],
+                    int(instance["id"]),
                     instance["score"] if is_det else instance.get("score", 0.0),
                     instance["area"],
                     bool(instance.get("iscrowd", 0)),
