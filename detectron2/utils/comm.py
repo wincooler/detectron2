@@ -261,3 +261,6 @@ def reduce_dict(input_dict, average=True):
             values /= world_size
         reduced_dict = {k: v for k, v in zip(names, values)}
     return reduced_dict
+
+def get_pi_training_loger():
+    return  logging.getLogger("pi_training")

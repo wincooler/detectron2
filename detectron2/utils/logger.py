@@ -52,9 +52,10 @@ def setup_logger(
     Returns:
         logging.Logger: a logger
     """
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.DEBUG)
-    logger.propagate = False
+    logger, is_d2_train = get_logger(name)
+    if is_d2_train :
+        logger.setLevel(logging.DEBUG)
+        logger.propagate = False
 
     if abbrev_name is None:
         abbrev_name = "d2" if name == "detectron2" else name
@@ -63,7 +64,7 @@ def setup_logger(
         "[%(asctime)s] %(name)s %(levelname)s: %(message)s", datefmt="%m/%d %H:%M:%S"
     )
     # stdout logging: master only
-    if distributed_rank == 0:
+    if is_d2_train and distributed_rank == 0:
         ch = logging.StreamHandler(stream=sys.stdout)
         ch.setLevel(logging.DEBUG)
         if color:
@@ -79,7 +80,7 @@ def setup_logger(
         logger.addHandler(ch)
 
     # file logging: all workers
-    if output is not None:
+    if is_d2_train and output is not None:
         if output.endswith(".txt") or output.endswith(".log"):
             filename = output
         else:
@@ -223,3 +224,14 @@ def create_small_table(small_dict):
         numalign="center",
     )
     return table
+
+def get_logger(name):
+    log_cls = logging.getLoggerClass()
+    logger = None 
+    is_d2_train = True
+    if "pi_training" in log_cls.manager.loggerDict.keys() :
+        logger =logging.getLogger("pi_training")  
+        is_d2_train = False
+    else:
+        logger = logging.getLogger(name)
+    return logger , is_d2_train
